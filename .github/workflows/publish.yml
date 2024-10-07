@@ -58,28 +58,6 @@ jobs:
         run: |
           echo "version=$(pnpm run publish ${{ inputs.versionType }} | tail -n1)" >> $GITHUB_OUTPUT
           git add .
-      - name: Generate a changelog for the new version
-        shell: bash
-        id: build-changelog
-        run: |
-          touch /tmp/changelog.md
-          git-cliff --config  cliff.toml --verbose --strip header --unreleased --tag v${{ steps.update-version.outputs.version }} > /tmp/changelog.md
-          if [ $? -eq 0 ]; then
-            CONTENT=$(cat /tmp/changelog.md)
-            cat /tmp/changelog.md | cat - ./CHANGELOG.md > temp && mv temp ./CHANGELOG.md
-            {
-              echo 'content<<EOF'
-              echo "$CONTENT"
-              echo EOF
-            } >> $GITHUB_OUTPUT
-            echo "version=${{ steps.update-version.outputs.version }}" >> $GITHUB_OUTPUT
-          else
-            echo "Failed to generate changelog"
-            exit 1
-          fi
-        env:
-          GITHUB_REPO: ${{ github.repository }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
