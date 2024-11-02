@@ -30,18 +30,18 @@ const TitleComp = () => {
 
       if (port == clashConfigs?.["mixed-port"]) {
         return {
-          label: "Success",
+          label: t("Success"),
           color: "success",
         };
       } else {
         return {
-          label: "Occupied",
+          label: t("Occupied"),
           color: "warning",
         };
       }
     } else {
       return {
-        label: "Disabled",
+        label: t("Disabled"),
         color: "error",
       };
     }
@@ -49,7 +49,7 @@ const TitleComp = () => {
 
   return (
     <div className="flex items-center gap-2 px-1">
-      <div>{t("Proxy takeover Status")}</div>
+      <div>{t("Proxy Takeover Status")}</div>
 
       <Chip
         color={status.color}
@@ -122,7 +122,7 @@ export const ProxyShortcuts = () => {
               <div className="flex flex-col gap-2">
                 <SettingsEthernet />
 
-                <div>{t("Tun Mode")}</div>
+                <div>{t("TUN Mode")}</div>
               </div>
             </PaperSwitchButton>
           </div>

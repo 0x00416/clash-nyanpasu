@@ -19,6 +19,7 @@ import {
 } from "react-hook-form-mui";
 import { useTranslation } from "react-i18next";
 import { useLatest } from "react-use";
+import { formatError } from "@/utils";
 import { message } from "@/utils/notification";
 import { Divider, InputAdornment } from "@mui/material";
 import { Profile, useClash } from "@nyanpasu/interface";
@@ -62,7 +63,7 @@ export const ProfileDialog = ({
     useForm<Profile.Item>({
       defaultValues: profile || {
         type: "remote",
-        name: addProfileCtx?.name || `New Profile`,
+        name: addProfileCtx?.name || t(`New Profile`),
         desc: addProfileCtx?.desc || "",
         url: addProfileCtx?.url || "",
         option: {
@@ -151,6 +152,11 @@ export const ProfileDialog = ({
       setTimeout(() => reset(), 300);
 
       onClose();
+    } catch (err) {
+      message("Failed to save profile: \n" + formatError(err), {
+        kind: "error",
+      });
+      console.error(err);
     } finally {
     }
   });
@@ -218,7 +224,7 @@ export const ProfileDialog = ({
             />
 
             <TextFieldElement
-              label="User Agent"
+              label={t("User Agent")}
               name="option.user_agent"
               control={control}
               {...commonProps}

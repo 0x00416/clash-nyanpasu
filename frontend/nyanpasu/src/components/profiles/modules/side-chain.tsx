@@ -39,7 +39,7 @@ export const SideChain = ({ onChainEdit }: SideChainProps) => {
   const handleChainClick = useLockFn(async (uid: string) => {
     const chains = isGlobalChainCurrent
       ? (getProfiles.data?.chain ?? [])
-      : (currentProfile?.chains ?? []);
+      : (currentProfile?.chain ?? []);
 
     const updatedChains = chains.includes(uid)
       ? chains.filter((chain) => chain !== uid)
@@ -52,7 +52,7 @@ export const SideChain = ({ onChainEdit }: SideChainProps) => {
         if (!currentProfile?.uid) {
           return;
         }
-        await setProfiles(currentProfile!.uid, { chains: updatedChains });
+        await setProfiles(currentProfile!.uid, { chain: updatedChains });
       }
     } catch (e) {
       message(`Apply error: ${formatError(e)}`, {
@@ -82,7 +82,7 @@ export const SideChain = ({ onChainEdit }: SideChainProps) => {
         {scripts?.map((item, index) => {
           const selected = isGlobalChainCurrent
             ? getProfiles.data?.chain?.includes(item.uid)
-            : currentProfile?.chains?.includes(item.uid);
+            : currentProfile?.chain?.includes(item.uid);
 
           return (
             <ChainItem
@@ -106,7 +106,7 @@ export const SideChain = ({ onChainEdit }: SideChainProps) => {
       >
         <Add color="primary" />
 
-        <div className="py-1">New Chain</div>
+        <div className="py-1">{t("New Chain")}</div>
       </ListItemButton>
     </div>
   );

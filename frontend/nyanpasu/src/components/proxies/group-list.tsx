@@ -69,11 +69,10 @@ export const GroupList = ({
     if (!data?.groups) {
       return [];
     }
-    if (!deferredProxiesFilter) {
-      return data.groups;
-    }
+
     return data.groups.filter((group) => {
-      return (
+      const filterMatches =
+        !deferredProxiesFilter ||
         group.name
           .toLowerCase()
           .includes(deferredProxiesFilter.toLowerCase()) ||
@@ -82,8 +81,8 @@ export const GroupList = ({
             .toLowerCase()
             .includes(deferredProxiesFilter.toLowerCase());
         }) ||
-        false
-      );
+        false;
+      return !(group.hidden ?? false) && filterMatches;
     });
   }, [data?.groups, deferredProxiesFilter]);
 

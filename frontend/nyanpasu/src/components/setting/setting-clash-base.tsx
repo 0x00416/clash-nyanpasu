@@ -52,7 +52,7 @@ export const SettingClashBase = () => {
     <BaseCard label={t("Clash Setting")}>
       <List disablePadding>
         <SwitchItem
-          label={t("Allow Lan")}
+          label={t("Allow LAN")}
           {...createBooleanProps("allow-lan")}
         />
 
@@ -60,7 +60,7 @@ export const SettingClashBase = () => {
 
         {coreType !== "clash-rs" && (
           <MenuItem
-            label={t("Tun Stack")}
+            label={t("TUN Stack")}
             options={tunStackOptions}
             selected={tunStackSelected}
             onSelected={(value) => {
@@ -98,7 +98,7 @@ export const SettingClashBase = () => {
             <ListItemText primary={t("Open UWP tool")} />
 
             <Button variant="contained" onClick={clickUWP}>
-              Open
+              {t("Open")}
             </Button>
           </ListItem>
         )}

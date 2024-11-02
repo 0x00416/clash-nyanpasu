@@ -132,6 +132,7 @@ pub fn resolve_setup(app: &mut App) {
     let mut mapping = Mapping::new();
     mapping.insert("mixed-port".into(), port.into());
     Config::clash().data().patch_config(mapping);
+    let _ = Config::clash().latest().prepare_external_controller_port();
     let _ = Config::clash().data().save_config();
 
     // 启动核心
@@ -277,7 +278,7 @@ pub fn create_window(app_handle: &AppHandle) {
                 }
             }
             Err(err) => {
-                log::error!(target: "app", "failed to get ns_window, {err}");
+                log::error!(target: "app", "failed to get ns_window, {err:?}");
             }
         }
     }
@@ -366,7 +367,7 @@ pub fn create_window(app_handle: &AppHandle) {
             OPEN_WINDOWS_COUNTER.fetch_add(1, Ordering::Release);
         }
         Err(err) => {
-            log::error!(target: "app", "failed to create window, {err}");
+            log::error!(target: "app", "failed to create window, {err:?}");
             if let Some(win) = app_handle.get_webview_window("main") {
                 // Cleanup window if failed to create, it's a workaround for tauri bug
                 log_err!(
